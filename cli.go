@@ -11,6 +11,7 @@ import (
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
 	"github.com/shirou/gopsutil/disk"
+	"github.com/fatih/color"
 )
 
 func main() {
@@ -82,7 +83,7 @@ func getCpuUsage(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	fmt.Printf("CPU Usage: %.2f%%\n", cpuInfo[0])
+	color.Cyan("CPU Usage: %.2f%%\n", cpuInfo[0])
 }
 
 func getMemoryUsage(cmd *cobra.Command, args []string) {
@@ -92,9 +93,9 @@ func getMemoryUsage(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	fmt.Printf("Total Memory: %.2f GB\n", float64(memoryInfo.Total)/1024/1024/1024)
-	fmt.Printf("Free Memory: %.2f GB\n", float64(memoryInfo.Free)/1024/1024/1024)
-	fmt.Printf("Used Memory: %.2f GB\n", float64(memoryInfo.Used)/1024/1024/1024)
+	color.Green("Total Memory: %.2f GB\n", float64(memoryInfo.Total)/1024/1024/1024)
+	color.Yellow("Free Memory: %.2f GB\n", float64(memoryInfo.Free)/1024/1024/1024)
+	color.Red("Used Memory: %.2f GB\n", float64(memoryInfo.Used)/1024/1024/1024)
 }
 
 func getDiskSpace(cmd *cobra.Command, args []string) {
@@ -111,10 +112,9 @@ func getDiskSpace(cmd *cobra.Command, args []string) {
 			continue
 		}
 		fmt.Printf("Disk: %s\n", partition.Mountpoint)
-		fmt.Printf("Total Space: %.2f GB\n", float64(usage.Total)/1024/1024/1024)
-		fmt.Printf("Free Space: %.2f GB\n", float64(usage.Free)/1024/1024/1024)
-		fmt.Printf("Used Space: %.2f GB\n", float64(usage.Used)/1024/1024/1024)
+		color.Cyan("Total Space: %.2f GB\n", float64(usage.Total)/1024/1024/1024)
+		color.Green("Free Space: %.2f GB\n", float64(usage.Free)/1024/1024/1024)
+		color.Red("Used Space: %.2f GB\n", float64(usage.Used)/1024/1024/1024)
 		fmt.Println()
 	}
 }
-
